@@ -1,10 +1,10 @@
 
 import type { Request, Response } from "express";
-import { prisma } from "../lib/prisma.js";
+import { prisma } from "../lib/prisma";
 import type {
   CreateServiceDto,
   ServiceResponseDto,
-} from "../dtos/service.dto.js";
+} from "../dtos/service.dto";
 
 // POST /services
 export const createService = async (
@@ -14,24 +14,6 @@ export const createService = async (
   try {
     const { companyId, name, description, price } =
       req.body as CreateServiceDto;
-
-    // Validate required fields
-    if (
-      !Number.isInteger(companyId) ||
-      companyId <= 0 ||
-      typeof name !== "string" ||
-      !name.trim() ||
-      typeof price !== "number" ||
-      !Number.isFinite(price) ||
-      price < 0 ||
-      (description !== undefined && typeof description !== "string")
-    ) {
-      res.status(400).json({
-        success: false,
-        message: "Please provide a valid companyId, name, price and description.",
-      });
-      return;
-    }
 
     // Check whether the company exists
     const company = await prisma.company.findUnique({

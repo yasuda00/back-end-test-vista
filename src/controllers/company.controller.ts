@@ -1,10 +1,10 @@
 
 import type { Request, Response } from "express";
-import { prisma } from "../lib/prisma.js";
+import { prisma } from "../lib/prisma";
 import type {
   CreateCompanyDto,
   CompanyWithServicesDto,
-} from "../dtos/company.dto.js";
+} from "../dtos/company.dto";
 
 // POST /companies
 export const createCompany = async (
@@ -13,20 +13,6 @@ export const createCompany = async (
 ): Promise<void> => {
   try {
     const { name, registrationNumber } = req.body as CreateCompanyDto;
-
-    // Validate required fields
-    if (
-      typeof name !== "string" ||
-      !name.trim() ||
-      typeof registrationNumber !== "string" ||
-      !registrationNumber.trim()
-    ) {
-      res.status(400).json({
-        success: false,
-        message: "Name and registration number are required.",
-      });
-      return;
-    }
 
     const company = await prisma.company.create({
       data: {
