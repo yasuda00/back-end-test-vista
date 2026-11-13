@@ -2,9 +2,10 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import { prisma } from "./lib/prisma.js";
-import serviceRoutes from "./routes/service.routes.js";
-import companyRoutes from "./routes/company.routes.js";
+import { prisma } from "./lib/prisma";
+import serviceRoutes from "./routes/service.routes";
+import companyRoutes from "./routes/company.routes";
+import { requestLogger } from "./middlewares/requestLogger";
 
 const app = express();
 const PORT = Number(process.env.PORT ?? 3000);
@@ -12,6 +13,9 @@ const PORT = Number(process.env.PORT ?? 3000);
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Request logging middleware
+app.use(requestLogger);
 
 // Route
 app.use("/companies", companyRoutes);
