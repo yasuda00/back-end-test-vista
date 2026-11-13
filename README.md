@@ -156,6 +156,36 @@ Start the production build:
 npm start
 ```
 
+## Running with Docker
+
+### 1. Run with Docker Compose (Recommended)
+
+Start both MySQL and the Express API together:
+
+```bash
+docker compose up --build
+```
+
+Run database migrations inside the running container (if needed):
+
+```bash
+docker compose exec app npx prisma migrate deploy
+```
+
+### 2. Run with Docker standalone
+
+Build the Docker image:
+
+```bash
+docker build -t vista-backend-api .
+```
+
+Run the container:
+
+```bash
+docker run -p 3000:3000 --env-file .env vista-backend-api
+```
+
 ## API Endpoints
 
 Base URL:
